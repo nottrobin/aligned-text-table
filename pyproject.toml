@@ -5,6 +5,8 @@ description = "Parser for space-aligned tables in plain text"
 authors = ["Robin Winslow <robin@robinwinslow.co.uk>"]
 license = "Public domain"
 readme = "README.md"
+homepage = "https://github.com/nottrobin/aligned-text-table"
+repository = "https://github.com/nottrobin/aligned-text-table"
 packages = [{include = "aligned_text_table"}]
 
 [tool.poetry.dependencies]
