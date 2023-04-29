@@ -8,15 +8,12 @@ def parse_row(
     This will parse a single multi-line row of a space-aligned table into a
     Python dictionary containing the data mapped to the provided `keys`.
 
-    NB: Currently this function starts parsing from the *right*.
-
     ```
     >>> parse_row(
     ...     lines=[
     ...         "This is     Column two   This one ",
     ...         "column one               is column",
-    ...         "three    "
-    ...         "NOTE: Hello world"
+    ...         "                         three    "
     ...     ],
     ...     keys=["One", "Two", "Three"]
     ... )
@@ -24,8 +21,7 @@ def parse_row(
     {
         "One": "This is column one",
         "Two": "Column two",
-        "Three": "This one is column three",
-        "Notes": ["NOTE: Hello world"]
+        "Three": "This one is column three"
     }
     ```
     """
@@ -60,11 +56,6 @@ def parse_row(
         if len(line) < len(first_line):
             difference = len(first_line) - len(line)
             lines[index] = difference * " " + line
-        
-        # Remove lines without gutters
-        if line.startswith("NOTE"):
-            column_data["Notes"] = lines[index:]
-            del lines[index:]
 
     # Split into columns
     for index, key in enumerate(keys):

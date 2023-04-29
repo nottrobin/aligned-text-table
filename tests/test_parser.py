@@ -23,21 +23,3 @@ class TestParser(unittest.TestCase):
         )
     
         assert result == expected
-
-    def test_extra_data(self):
-        expected = {
-            "One": "Col 1",
-            "Two": "Col 2",
-            "Three": "Col 3",
-            "Notes": ["NOTE: Hello world this is robin"]
-        }
-
-        result = parse_row(
-            lines=[
-                "Col 1     Col 2   Col 3",
-                "NOTE: Hello world this is robin"
-            ],
-            keys=["One", "Two", "Three"],
-        )
-    
-        assert result == expected
