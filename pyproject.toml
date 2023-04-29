@@ -1,11 +1,10 @@
 [tool.poetry]
 name = "aligned-text-table"
-version = "0.1.0"
+version = "0.1.1"
 description = "Parser for space-aligned tables in plain text"
 authors = ["Robin Winslow <robin@robinwinslow.co.uk>"]
 license = "Public domain"
 readme = "README.md"
-homepage = "https://github.com/nottrobin/aligned-text-table"
 repository = "https://github.com/nottrobin/aligned-text-table"
 packages = [{include = "aligned_text_table"}]
 
