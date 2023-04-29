@@ -8,28 +8,28 @@ from aligned_text_table import parse_row
 class TestParser(unittest.TestCase):
     def test_example_table(self):
         expected = {
-            "one": "This is column one",
-            "two": "Column two",
-            "three": "This one is column three of 3"
+            "One": "This is column one",
+            "Two": "Column  two",
+            "Three": "This one is column three of 3"
         }
 
         result = parse_row(
             lines=[
-                "This is     Column two   This one  ",
+                "This is     Column  two   This one  ",
                 "column one               is column ",
                 "three of 3"
             ],
-            keys=["one", "two", "three"]
+            keys=["One", "Two", "Three"]
         )
     
         assert result == expected
 
     def test_extra_data(self):
         expected = {
-            "one": "Col 1",
-            "two": "Col 2",
-            "three": "Col 3",
-            "notes": ["NOTE: Hello world this is robin"]
+            "One": "Col 1",
+            "Two": "Col 2",
+            "Three": "Col 3",
+            "Notes": ["NOTE: Hello world this is robin"]
         }
 
         result = parse_row(
@@ -37,8 +37,7 @@ class TestParser(unittest.TestCase):
                 "Col 1     Col 2   Col 3",
                 "NOTE: Hello world this is robin"
             ],
-            keys=["one", "two", "three"],
-            unmatched_key="notes"
+            keys=["One", "Two", "Three"],
         )
     
         assert result == expected

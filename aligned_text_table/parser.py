@@ -2,8 +2,7 @@ import re
 
 
 def parse_row(
-    lines: list, keys: list,
-    unmatched_key: str = "unmatched"
+    lines: list, keys: list
 ) -> dict:
     """
     This will parse a single multi-line row of a space-aligned table into a
@@ -17,30 +16,33 @@ def parse_row(
     ...         "This is     Column two   This one ",
     ...         "column one               is column",
     ...         "three    "
+    ...         "NOTE: Hello world"
     ...     ],
-    ...     keys=["one", "two", "three"]
+    ...     keys=["One", "Two", "Three"]
     ... )
     
     {
-        "one": "This is column one",
-        "two": "Column two",
-        "three": "This one is column three"
+        "One": "This is column one",
+        "Two": "Column two",
+        "Three": "This one is column three",
+        "Notes": ["NOTE: Hello world"]
     }
     ```
     """
 
     first_line = lines[0]
     column_data = {}
+    gutter_regex = "\s\s\s+"
 
     # Find column locations
     column_ranges = []
     start_position = 0
-    gutter_match = re.search("\s\s+", first_line)
+    gutter_match = re.search(gutter_regex, first_line)
 
     while(gutter_match):
         new_position = start_position + gutter_match.end()
         column_ranges.append( (start_position, new_position) )
-        gutter_match = re.search("\s\s+", first_line[new_position:])
+        gutter_match = re.search(gutter_regex, first_line[new_position:])
         start_position = new_position
 
     # Add the final column if it wasn't already added
@@ -53,20 +55,16 @@ def parse_row(
         )
 
     # Check lines
-    unmatched = []
     for index, line in enumerate(lines):
         # Add spaces to start of short lines
-        if len(lines[index]) < len(first_line):
-            difference = len(first_line) - len(lines[index])
-            lines[index] = difference * " " + lines[index]
+        if len(line) < len(first_line):
+            difference = len(first_line) - len(line)
+            lines[index] = difference * " " + line
         
         # Remove lines without gutters
-        if not re.search("\s\s+", lines[index]):
-            unmatched.append(lines[index])
-            del lines[index]
-
-    if unmatched:
-        column_data[unmatched_key] = unmatched
+        if line.startswith("NOTE"):
+            column_data["Notes"] = lines[index:]
+            del lines[index:]
 
     # Split into columns
     for index, key in enumerate(keys):
