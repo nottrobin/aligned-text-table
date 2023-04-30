@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aligned-text-table"
-version = "0.2.0"
+version = "0.3.0"
 description = "Parser for space-aligned tables in plain text"
 authors = ["Robin Winslow <robin@robinwinslow.co.uk>"]
 license = "Public domain"
